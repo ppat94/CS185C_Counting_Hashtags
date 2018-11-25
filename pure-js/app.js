@@ -15,7 +15,7 @@ const INITIAL_VIEW_STATE = {
 };
 
 // Set your mapbox token here
-mapboxgl.accessToken = process.env.MapboxAccessToken; // eslint-disable-line
+mapboxgl.accessToken = 'pk.eyJ1IjoicHBhdDk0IiwiYSI6ImNqb3IweHZrbjBhdGszd3BkZWp3a2x6aXoifQ.ggKP0zuaUxqs8MFPuSV_2A'; // eslint-disable-line
 
 const map = new mapboxgl.Map({
   container: 'map',
@@ -27,7 +27,7 @@ const map = new mapboxgl.Map({
   bearing: INITIAL_VIEW_STATE.bearing,
   pitch: INITIAL_VIEW_STATE.pitch
 });
-
+process.env.MapboxAccessToken
 export const deck = new Deck({
   canvas: 'deck-canvas',
   width: '100%',
