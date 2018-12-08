@@ -27,7 +27,7 @@ const map = new mapboxgl.Map({
   bearing: INITIAL_VIEW_STATE.bearing,
   pitch: INITIAL_VIEW_STATE.pitch
 });
-process.env.MapboxAccessToken
+
 export const deck = new Deck({
   canvas: 'deck-canvas',
   width: '100%',

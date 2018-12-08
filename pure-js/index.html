@@ -15,6 +15,24 @@
         margin: 0;
       }
 
+      #tooltip:empty {
+        display: none;
+      }
+
+      #tooltip {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 11px;
+        position: absolute;
+        padding: 4px;
+        margin: 8px;
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        max-width: 300px;
+        font-size: 10px;
+        z-index: 9;
+        pointer-events: none;
+      }
+
       #control-panel {
         position: absolute;
         background: #fff;
@@ -35,10 +53,8 @@
   </head>
 
   <body>
+    <div id="tooltip"></div>
     <div id="control-panel">
-      <input type="text" id="link-box"/>
-      <input type="button" id="search-button" value="Search"
-          onclick="window.location = document.getElementById('link-box').value;"/>
       <div>
         <label>Radius</label>
         <input id="radius" type="range" min="1000" max="20000" step="1000" value="1000"></input>
@@ -58,9 +74,6 @@
   </body>
 
   <script type="text/javascript">
-       document.getElementById("search-button").addEventListener("click", function(){
-            window.location = document.getElementById('link-box').value;
-       });
 
     const {DeckGL, HexagonLayer} = deck;
 
@@ -75,7 +88,10 @@
       pitch: 40.5
     });
 
-    let data = null;
+    let data = 'https://raw.githubusercontent.com/lutangar/cities.json/master/cities.json';
+    let hashtags = null;
+    let hashtag = {};
+    let count = 0;
 
     const OPTIONS = ['radius', 'coverage', 'upperPercentile'];
 
@@ -115,23 +131,106 @@
         data,
         elevationRange: [0, 1000],
         elevationScale: 250,
+        pickable: true,
+        onHover: onHover,
+        autoHighlight: true,
         extruded: true,
-        getPosition: d => d,
+        getPosition: d => [d.lng, d.lat],
         lightSettings: LIGHT_SETTINGS,
         opacity: 1,
         ...options
       });
-
+//console.log('here data',data)
       deckgl.setProps({
         layers: [hexagonLayer]
       });
     }
 
-    d3.csv('hash.csv')
+    d3.csv('hash-2.csv')
       .then(response => {
-      data = response.map(d => [Number(d.long), Number(d.lat)]);
+      //data = response.map(d => [Number(d.long), Number(d.lat)]);
+      hashtag = response.map(res => (res.hashtag));
+      console.log(hashtag);
+      console.log(data);
+      //hashtags = hashtag[0];
       renderLayer();
     });
+
+    // function updateTooltip(info) {
+    //     const tooltip = d3.select('#tooltip');
+    //     const props = info.object ? info.object : null;
+    //     let content = '';
+    //     if (props) {
+    //       const key = getKey(props);
+    //       const r = incidents[year][key];
+    //       const f = fatalities[year][key];
+    //       let content = `<big>${props.name} (${props.state})</big>`;
+    //       if (r) {
+    //         content += `
+    //   <div>
+    //     <b>${f}</b> people died in
+    //     <b>${r}</b> crashes
+    //     on ${props.type === 'SR' ? props.state : props.type}-${props.id}
+    //     in <b>${year}</b>
+    //   </div>`;
+    //       } else {
+    //         content += `<div>no accidents recorded in <b>${year}</b></div>`;
+    //       }
+    //       tooltip.style('display', 'block').style('left', info.x).style('top', info.y).html(content);
+    //     } else {
+    //       tooltip.style('display', 'none');
+    //     }
+    //   }
+
+    function onHover (info) {
+      const {x, y, object} = info;
+      console.log(info);
+      if (object) {
+        tooltip.style.left = `${x}px`;
+        tooltip.style.top = `${y}px`;
+        tooltip.innerHTML = `
+        <div>${object.centroid.join(', ')}</div>
+        <div>${object.points.length} active users</div>
+        <div>${hashtag[0]}</div>
+        `;
+      } else {
+        tooltip.innerHTML = '';
+      }
+    }
+
+//     function updateTooltip({x, y, object}) {
+//   const tooltip = document.getElementById('tooltip');
+//   console.log(object);
+//
+//   if (object) {
+//     tooltip.style.top = `${y}px`;
+//     tooltip.style.left = `${x}px`;
+//     tooltip.innerHTML = `
+// <div><b>Lat: </b></div>
+// <div><b>Lon: </b></div>
+// <div><b>Hashtag: </b></div>
+// <div>${object.centroid.join(', ')}</div>
+// `;
+//   } else {
+//     tooltip.innerHTML = '';
+//   }
+// }
+
+    // function updateTooltip({x, y, object}) {
+    //   const tooltip = document.getElementById('tooltip');
+    //   if (object) {
+    //     tooltip.style.top = `${y}px`;
+    //     tooltip.style.left = `${x}px`;
+    //     tooltip.innerHTML = `
+    // <div><b>Average Property Value &nbsp;</b></div>
+    // <div><div>${object.properties.valuePerSqm} / m<sup>2</sup></div></div>
+    // <div><b>Growth</b></div>
+    // <div>${Math.round(object.properties.growth * 100)}%</div>
+    // `;
+    //   } else {
+    //     tooltip.innerHTML = '';
+    //   }
+    // }
 
   </script>
 </html>
