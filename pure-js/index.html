@@ -88,10 +88,9 @@
       pitch: 40.5
     });
 
-    let data = 'https://raw.githubusercontent.com/lutangar/cities.json/master/cities.json';
+    let data = null;
     let hashtags = null;
     let hashtag = {};
-    let count = 0;
 
     const OPTIONS = ['radius', 'coverage', 'upperPercentile'];
 
@@ -128,59 +127,24 @@
       const hexagonLayer = new HexagonLayer({
         id: 'heatmap',
         colorRange: COLOR_RANGE,
-        data,
+        data: 'record.json',
         elevationRange: [0, 1000],
         elevationScale: 250,
         pickable: true,
-        onHover: onHover,
+        onHover: info => onHover(info),
         autoHighlight: true,
         extruded: true,
-        getPosition: d => [d.lng, d.lat],
+        getPosition: d => [d.long, d.lat],
         lightSettings: LIGHT_SETTINGS,
         opacity: 1,
         ...options
       });
-//console.log('here data',data)
       deckgl.setProps({
         layers: [hexagonLayer]
       });
     }
 
-    d3.csv('hash.csv')
-      .then(response => {
-      //data = response.map(d => [Number(d.long), Number(d.lat)]);
-      hashtag = response.map(res => (res.hashtag));
-      console.log(hashtag);
-      console.log(data);
-      //hashtags = hashtag[0];
-      renderLayer();
-    });
-
-    // function updateTooltip(info) {
-    //     const tooltip = d3.select('#tooltip');
-    //     const props = info.object ? info.object : null;
-    //     let content = '';
-    //     if (props) {
-    //       const key = getKey(props);
-    //       const r = incidents[year][key];
-    //       const f = fatalities[year][key];
-    //       let content = `<big>${props.name} (${props.state})</big>`;
-    //       if (r) {
-    //         content += `
-    //   <div>
-    //     <b>${f}</b> people died in
-    //     <b>${r}</b> crashes
-    //     on ${props.type === 'SR' ? props.state : props.type}-${props.id}
-    //     in <b>${year}</b>
-    //   </div>`;
-    //       } else {
-    //         content += `<div>no accidents recorded in <b>${year}</b></div>`;
-    //       }
-    //       tooltip.style('display', 'block').style('left', info.x).style('top', info.y).html(content);
-    //     } else {
-    //       tooltip.style('display', 'none');
-    //     }
-    //   }
+    renderLayer();
 
     function onHover (info) {
       const {x, y, object} = info;
@@ -189,14 +153,78 @@
         tooltip.style.left = `${x}px`;
         tooltip.style.top = `${y}px`;
         tooltip.innerHTML = `
-        <div>${object.centroid.join(', ')}</div>
-        <div>${object.points.length} active users</div>
-        <div>${hashtag[0]}</div>
+        <div>Coords: ${object.points[0].lat}, ${object.points[0].long}</div>
+        <div>Hashtag(s): ${object.points[0].hashtags}</div>
+        <div>Active Users: ${object.points.length}</div>
         `;
       } else {
         tooltip.innerHTML = '';
       }
     }
+
+  </script>
+</html>
+
+
+<!-- *******************************  Test Code  ************************************ -->
+<!--
+// d3.csv('hash-2.csv')
+//   .then(response => {
+//   //data = response.map(d => [Number(d.long), Number(d.lat)]);
+//   hashtag = response.map(res => (res.hashtag));
+//   console.log(hashtag);
+//   // console.log(data);
+//   //hashtags = hashtag[0];
+//   //renderLayer();
+// });
+
+// function updateTooltip(info) {
+//     const tooltip = d3.select('#tooltip');
+//     const props = info.object ? info.object : null;
+//     let content = '';
+//     if (props) {
+//       const key = getKey(props);
+//       const r = incidents[year][key];
+//       const f = fatalities[year][key];
+//       let content = `<big>${props.name} (${props.state})</big>`;
+//       if (r) {
+//         content += `
+//   <div>
+//     <b>${f}</b> people died in
+//     <b>${r}</b> crashes
+//     on ${props.type === 'SR' ? props.state : props.type}-${props.id}
+//     in <b>${year}</b>
+//   </div>`;
+//       } else {
+//         content += `<div>no accidents recorded in <b>${year}</b></div>`;
+//       }
+//       tooltip.style('display', 'block').style('left', info.x).style('top', info.y).html(content);
+//     } else {
+//       tooltip.style('display', 'none');
+//     }
+//   }
+
+function updateTooltip(info,x,y) {
+//     const tooltip = d3.select('#tooltip');
+//     const props = info.object ? info.object: null;
+//     console.log(info.object);
+//     let content = '';
+//     if (props) {
+//     //  const key = getKey(props);
+//          tooltip.style.left = `${x}px`;
+//          tooltip.style.top = `${y}px`;
+//          tooltip.innerHTML = `
+//          <div>${props.centroid.join(', ')}</div>
+//          <div>${props.points.length} active users</div>
+//          <div>${props.points.[0].name}</div>
+//          `;
+//     } else {
+//          tooltip.innerHTML = '';
+//     //  const r = incidents[year][key];
+//     //  const f = fatalities[year][key];
+//
+//   }
+// }
 
 //     function updateTooltip({x, y, object}) {
 //   const tooltip = document.getElementById('tooltip');
@@ -216,21 +244,19 @@
 //   }
 // }
 
-    // function updateTooltip({x, y, object}) {
-    //   const tooltip = document.getElementById('tooltip');
-    //   if (object) {
-    //     tooltip.style.top = `${y}px`;
-    //     tooltip.style.left = `${x}px`;
-    //     tooltip.innerHTML = `
-    // <div><b>Average Property Value &nbsp;</b></div>
-    // <div><div>${object.properties.valuePerSqm} / m<sup>2</sup></div></div>
-    // <div><b>Growth</b></div>
-    // <div>${Math.round(object.properties.growth * 100)}%</div>
-    // `;
-    //   } else {
-    //     tooltip.innerHTML = '';
-    //   }
-    // }
-
-  </script>
-</html>
+// function updateTooltip({x, y, object}) {
+//   const tooltip = document.getElementById('tooltip');
+//   if (object) {
+//     tooltip.style.top = `${y}px`;
+//     tooltip.style.left = `${x}px`;
+//     tooltip.innerHTML = `
+// <div><b>Average Property Value &nbsp;</b></div>
+// <div><div>${object.properties.valuePerSqm} / m<sup>2</sup></div></div>
+// <div><b>Growth</b></div>
+// <div>${Math.round(object.properties.growth * 100)}%</div>
+// `;
+//   } else {
+//     tooltip.innerHTML = '';
+//   }
+// }
+-->
