@@ -146,7 +146,7 @@
       });
     }
 
-    d3.csv('hash-2.csv')
+    d3.csv('hash.csv')
       .then(response => {
       //data = response.map(d => [Number(d.long), Number(d.lat)]);
       hashtag = response.map(res => (res.hashtag));
