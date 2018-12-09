@@ -25,7 +25,7 @@ start_time = time.time()
 print(start_time)
 
 class l(StreamListener):
-    def __init__(self, start_time, time_limit=100):
+    def __init__(self, start_time, time_limit=10):
         print("-------------------------------------------------------------------------")
         print("----------Downloading Tweeter's Live Stream for 10seconds ---------------")
         print("-------------------------------------------------------------------------")
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     #This handles Twitter authetification and the connection to Twitter Streaming API
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
-    stream = Stream(auth, l(start_time, time_limit=100))
+    stream = Stream(auth, l(start_time, time_limit=10))
 
     GEOBOX_WORLD = [-180, -90, 180, 90]
     GEOBOX_USA = [-179.1506, 18.9117, -66.9406, 71.4410]
