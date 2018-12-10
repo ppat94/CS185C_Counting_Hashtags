@@ -44,8 +44,8 @@ class l(StreamListener):
             print((self.limit+self.time) - time.time())
             return True
         
-        saveFile = io.open(self.filename, 'w')
-        saveFile.write(self.tweet_data)
+        #saveFile = io.open(self.filename, 'w')
+        saveFile.write((self.tweet_data).decode("utf-8"))
         saveFile.close()
         exit(0)
         return False
