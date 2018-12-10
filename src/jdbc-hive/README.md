@@ -1,7 +1,7 @@
 Example for reading & writing into Hive
 ==================================
 
-Package for saagie : mvn package and get the package in target.
+Package: mvn package and get the package in target.
 
 Usage in local :
 
