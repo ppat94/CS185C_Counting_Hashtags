@@ -34,14 +34,14 @@ def get_clean_files(raw_tweets):
 def readFile(content):
     tweets = content.split('\n')
     fout = codecs.open(csv_filename, 'a', 'utf-8')
-    print("Number of tweets collected in this stream: ",len(tweets))
+    #print("Number of tweets collected in this stream: ",len(tweets))
     data = []
     read=True
     for tweet in tweets:
         if read:
             [id,hashtags,long,lat] = parseTweets(tweet)
             hashes = ""
-            print("Tweets with all required features")
+            #print("Tweets with all required features")
             for hash in hashtags:
                 hashes = hashes + '#' +hash
             if id and long and hashes:
