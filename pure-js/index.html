@@ -56,6 +56,10 @@
     <div id="tooltip"></div>
     <div id="control-panel">
       <div>
+        <label>Search Hashtag</label>
+        <input id="txt-search" type="input" class="form-control input-lg" placeholder="Type a hashtag...">
+      </div>
+      <div>
         <label>Radius</label>
         <input id="radius" type="range" min="1000" max="20000" step="1000" value="1000"></input>
         <span id="radius-value"></span>
@@ -116,6 +120,28 @@
       document.getElementById(key).oninput = renderLayer;
     });
 
+    function searchHayStack(needle) {
+      d3.json('record.json')
+      .then(response => {
+        data = response.map(d => d);
+        const searchStr = needle;
+        const res = data.filter(obj => Object.values(obj).some(val => val.includes(searchStr)));
+        console.log(res);
+        localStorage.setItem('myStorage', JSON.stringify(res));
+      });
+    }
+
+    var needle = document.getElementById("txt-search");
+    needle.onkeydown = function (e) {
+      // Remove the keycode IF statement to search in live keystroke input
+      if (event.keyCode === 13) {
+        console.log("Searching " + needle.value + "...");
+        var searchStr = needle.value;
+        searchHayStack(searchStr);
+        renderLayer();
+      }
+    }
+
     function renderLayer () {
       const options = {};
       OPTIONS.forEach(key => {
@@ -124,10 +150,11 @@
         options[key] = Number(value);
       });
 
+      var res = JSON.parse(localStorage.getItem('myStorage'));
       const hexagonLayer = new HexagonLayer({
         id: 'heatmap',
         colorRange: COLOR_RANGE,
-        data: 'record.json',
+        data: res,
         elevationRange: [0, 1000],
         elevationScale: 250,
         pickable: true,
@@ -144,8 +171,6 @@
       });
     }
 
-    renderLayer();
-
     function onHover (info) {
       const {x, y, object} = info;
       console.log(info);
@@ -153,9 +178,9 @@
         tooltip.style.left = `${x}px`;
         tooltip.style.top = `${y}px`;
         tooltip.innerHTML = `
-        <div>Coords: ${object.points[0].lat}, ${object.points[0].long}</div>
-        <div>Hashtag(s): ${object.points[0].hashtags}</div>
-        <div>Active Users: ${object.points.length}</div>
+        <div><h3>Coords: ${object.points[0].lat}, ${object.points[0].long}</h3></div>
+        <div><h3>Hashtag(s): ${object.points[0].hashtags}</h3></div>
+        <div><h3>Active Users: ${object.points.length}</h3></div>
         `;
       } else {
         tooltip.innerHTML = '';
