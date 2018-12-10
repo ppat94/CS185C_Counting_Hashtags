@@ -95,6 +95,7 @@
     let data = null;
     let hashtags = null;
     let hashtag = {};
+    const jsonFilePath = 'record.json';
 
     const OPTIONS = ['radius', 'coverage', 'upperPercentile'];
 
@@ -121,7 +122,7 @@
     });
 
     function searchHayStack(needle) {
-      d3.json('record.json')
+      d3.json(jsonFilePath)
       .then(response => {
         data = response.map(d => d);
         const searchStr = needle;
@@ -132,17 +133,22 @@
     }
 
     var needle = document.getElementById("txt-search");
+    if (needle.value.length == 0) {
+      console.log("No input");
+      renderLayer(jsonFilePath);
+    }
     needle.onkeydown = function (e) {
-      // Remove the keycode IF statement to search in live keystroke input
-      if (event.keyCode === 13) {
-        console.log("Searching " + needle.value + "...");
-        var searchStr = needle.value;
-        searchHayStack(searchStr);
-        renderLayer();
-      }
+        // Remove the keycode IF statement to search in live keystroke input
+        if (event.keyCode === 13) {
+          console.log("Searching " + needle.value + "...");
+          var searchStr = needle.value;
+          res = JSON.parse(localStorage.getItem('myStorage'));
+          searchHayStack(searchStr);
+          renderLayer(res);
+        }
     }
 
-    function renderLayer () {
+    function renderLayer (res) {
       const options = {};
       OPTIONS.forEach(key => {
         const value = document.getElementById(key).value;
@@ -150,7 +156,6 @@
         options[key] = Number(value);
       });
 
-      var res = JSON.parse(localStorage.getItem('myStorage'));
       const hexagonLayer = new HexagonLayer({
         id: 'heatmap',
         colorRange: COLOR_RANGE,
