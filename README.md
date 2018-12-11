@@ -9,11 +9,11 @@ https://drive.google.com/open?id=1zqmiNRkLkquSRdOB7QbsMUjNu5WucwGi
 3. Start the virtual machine from the virtual box and wait for it be up completely.
 
 4. Now, on your host computer, ssh into machine using mapr user and the ip: 192.168.56.101 using the following command:
-ssh mapr@192.168.56.101 
+>ssh mapr@192.168.56.101 
 Note: On being prompted for password, enter password as “mapr”
 
 5. If there is trouble in logging into the virtual machine and error message “WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!” is displayed, then,  execute the following command:
-ssh-keygen -R 192.168.56.101 
+>ssh-keygen -R 192.168.56.101 
 
 6. Open a new tab in terminal and ssh into VM using the command mentioned in step 4.
 
@@ -24,8 +24,9 @@ cd Desktop/CS185C_Counting_Hashtags/src
 >su root
 >chmod +x run.sh
 >./start.sh
->You will be prompted to “replace hash.txt?” for which, enter “y” as a response.
->Further you will also be prompted to “replace __MACOSX/._hash.txt?” for which, enter “y” as the response.
+
+You will be prompted to “replace hash.txt?” for which, enter “y” as a response.
+Further you will also be prompted to “replace __MACOSX/._hash.txt?” for which, enter “y” as the response.
 
 9. Now let this process run. Run the run.sh in another tab which we opened earlier and make sure to connect as root. 
 >cd Desktop/CS185C_Counting_Hashtags/src
@@ -37,8 +38,8 @@ The above script will perform twitter streaming and terminate after 30 seconds.
 
 b) In the cron job terminal, you will see the JDBC code, node module getting built. The web server starts after that.
 
- 10.   To find the trending tweets open the following URL in the Safari web    browser:
-	http://0.0.0.0:8080
+10. To find the trending tweets, open the following URL in the Safari web browser:
+>http://0.0.0.0:8080
      
 11. Now select the search-box and hit the Enter key 2 times to show all the current trends in the world. (Data visualization can sometimes take time to populate the data on the webpage due to large volume of data).
 
