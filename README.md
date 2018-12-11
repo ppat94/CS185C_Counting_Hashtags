@@ -9,7 +9,8 @@ Note: All the following commands should be executed using the root user with pas
 3. Start the virtual machine from the virtual box and wait for it be up completely.
 
 4. Now, on your host computer, ssh into machine using mapr user and the ip: 192.168.56.101 using the following command:
->ssh mapr@192.168.56.101 
+>ssh mapr@192.168.56.101
+
 Note: On being prompted for password, enter password as “mapr”
 
 5. If there is trouble in logging into the virtual machine and error message “WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!” is displayed, then,  execute the following command:
@@ -34,6 +35,7 @@ Further you will also be prompted to “replace __MACOSX/._hash.txt?” for whic
 a) Grant permissions and execute the run.sh script by using the following command:
 >chmod +x run.sh
 >./run.sh
+
 The above script will perform twitter streaming and terminate after 30 seconds.
 
 b) In the cron job terminal, you will see the JDBC code, node module getting built. The web server starts after that.
