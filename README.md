@@ -29,10 +29,12 @@ cd Desktop/CS185C_Counting_Hashtags/src
 
 9. Now let this process run. Run the run.sh in another tab which we opened earlier and make sure to connect as root. 
 >cd Desktop/CS185C_Counting_Hashtags/src
+
 a)Grant permissions and execute the run.sh script by using the following command:
 >chmod +x run.sh
 >./run.sh
-The above script will perform twitter streaming and terminate after 30 seconds. 
+The above script will perform twitter streaming and terminate after 30 seconds.
+
 b)In the cron job terminal, you will see the JDBC code, node module getting built. The web server starts after that.
 
  10.   To find the trending tweets open the following URL in the Safari web    browser:
