@@ -27,7 +27,7 @@ print(start_time)
 class l(StreamListener):
     def __init__(self, start_time, time_limit=10):
         print("-------------------------------------------------------------------------")
-        print("----------Downloading Tweeter's Live Stream for 10seconds ---------------")
+        print("----------Downloading Twitter's Live Stream for 10seconds ---------------")
         print("-------------------------------------------------------------------------")
         
         self.time = start_time
