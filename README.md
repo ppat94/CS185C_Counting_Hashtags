@@ -29,7 +29,7 @@ cd Desktop/CS185C_Counting_Hashtags/src
 You will be prompted to “replace hash.txt?” for which, enter “y” as a response.
 Further you will also be prompted to “replace __MACOSX/._hash.txt?” for which, enter “y” as the response.
 
-9. Now let this process run. Run the run.sh in another tab which we opened earlier and make sure to connect as root. 
+9. Now let this process run. Run the run.sh in another tab which we opened earlier and make sure to connect as root.
 >cd Desktop/CS185C_Counting_Hashtags/src
 
 a) Grant permissions and execute the run.sh script by using the following command:
