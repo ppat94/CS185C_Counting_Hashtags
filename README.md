@@ -2,7 +2,7 @@
 
 Note: All the following commands should be executed using the root user with password “mapr”.
 1. Download the .ova image from the following link:
-https://drive.google.com/open?id=1zqmiNRkLkquSRdOB7QbsMUjNu5WucwGi
+>https://drive.google.com/open?id=1zqmiNRkLkquSRdOB7QbsMUjNu5WucwGi
 
 2. Import the .ova image in VirtualBox and start the virtual machine
 
@@ -45,9 +45,8 @@ b) In the cron job terminal, you will see the JDBC code, node module getting bui
 
 12.  Type a hash-tag, for example, “thanksgiving2018” and hit Enter key twice to see the change in the data and view only trends related to the hashtag specified in the searchbox.
 
-
 Following is the link to video tutorial:
-https://drive.google.com/open?id=1vuQF1cHBG_lbDL2EIVE_2CAls88OkaA3
+>https://drive.google.com/open?id=1vuQF1cHBG_lbDL2EIVE_2CAls88OkaA3
 
 
 
